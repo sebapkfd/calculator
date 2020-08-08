@@ -6,7 +6,7 @@ function sustract(a, b){
     return a - b;
 }
 
-function multiply(a,b ){
+function multiply(a,b){
     return a*b;
 }
 
@@ -29,6 +29,25 @@ function operate(a = 0, b = 0, operator){
     }
 }
 
+// Funcion Auxiliar, después su funcionamiento será enviado a otra funcion
+// funciona solo con + por ahora
+function resolve(string, operator = '+'){
+    let operatorToEvaluate;
+    if (string.includes('+')){
+    expresionArray = string.split('+');
+    operatorToEvaluate = '+'
+    }
+    else if (string.includes('-')) {
+        expresionArray = string.split('-');
+        operatorToEvaluate = '-'
+    }
+    let aux = operate(Number(expresionArray[0]), Number(expresionArray[1]), operatorToEvaluate);
+    operation = aux.toString();
+    if (operator != '=') {
+    operation += operator
+    }
+}
+
 let numberButtons = document.querySelectorAll('.button')
 let operation = '';
 numberButtons.forEach( (button) =>{
@@ -39,19 +58,34 @@ numberButtons.forEach( (button) =>{
     });
 })
 
-let sumOperator = document.getElementById('+')
-sumOperator.addEventListener('click', () =>{
-    console.log(sumOperator.id);
-    operation +=sumOperator.id;
-    console.log(operation);
+
+// Si cuando se presiona un operador ya hay uno antes (quizas solo valga con +/-)
+//
+let sumOperator = document.querySelectorAll('.operator')
+sumOperator.forEach( (operator) =>{
+    operator.addEventListener('click', () =>{
+        console.log(operator.id);
+        (operation.includes('+') || operation.includes('-')) ? resolve(operation, operator.id): operation += operator.id; // solo suma hasta ahora
+        console.log(operation);
+    })
 })
 
 let equalsOperator = document.getElementById('equals');
-equalsOperator.addEventListener('click', ()=>{
-    expresionArray = operation.split('+');
-    console.log(operate(Number(expresionArray[0]), Number(expresionArray[1]), '+'));
+equalsOperator.addEventListener('click', ()=> {
+    resolve(operation,'=')
+    console.log(operation)
 })
 
+let cleanButton = document.getElementById('ac');
+cleanButton.addEventListener('click', ()=>{
+    operation = '';
+})
+
+
+// delimita con la resta, pero tiene problemas con los numeros negativos, sobre todo en el primer numero
+// agregar que resuelva multiplicacion y division
+// Equals solo muestre el resultado en pantalla, y que las operaciones se hagan automaticas 
+// con los operadores, de forma de siempre trabajar con dos numeros
 //  para usar en el display
 // let display = document.querySelector('.result-container');
 // let displayOperation = document.createElement('div');
