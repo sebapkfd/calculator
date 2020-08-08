@@ -30,7 +30,7 @@ function operate(a = 0, b = 0, operator){
 }
 
 // Funcion Auxiliar, después su funcionamiento será enviado a otra funcion
-// funciona solo con + por ahora
+// funciona solo con +/-
 function resolve(string, operator = '+'){
     let operatorToEvaluate;
     if (string.includes('+')){
@@ -38,7 +38,14 @@ function resolve(string, operator = '+'){
     operatorToEvaluate = '+'
     }
     else if (string.includes('-')) {
-        expresionArray = string.split('-');
+        if (string.split('-').length == 3) {
+            expresionArray = string.split('-');
+            expresionArray.shift();
+            expresionArray[0]*=-1;
+        }else{
+            expresionArray = string.split('-');
+        }
+
         operatorToEvaluate = '-'
     }
     let aux = operate(Number(expresionArray[0]), Number(expresionArray[1]), operatorToEvaluate);
@@ -82,10 +89,8 @@ cleanButton.addEventListener('click', ()=>{
 })
 
 
-// delimita con la resta, pero tiene problemas con los numeros negativos, sobre todo en el primer numero
 // agregar que resuelva multiplicacion y division
-// Equals solo muestre el resultado en pantalla, y que las operaciones se hagan automaticas 
-// con los operadores, de forma de siempre trabajar con dos numeros
+// Equals solo muestre el resultado en pantalla, y que las operaciones se hagan automaticas
 //  para usar en el display
 // let display = document.querySelector('.result-container');
 // let displayOperation = document.createElement('div');
