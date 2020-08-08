@@ -34,8 +34,8 @@ function operate(a = 0, b = 0, operator){
 function resolve(string, operator = '+'){
     let operatorToEvaluate;
     if (string.includes('+')){
-    expresionArray = string.split('+');
-    operatorToEvaluate = '+'
+        expresionArray = string.split('+');
+        operatorToEvaluate = '+'
     }
     else if (string.includes('-')) {
         if (string.split('-').length == 3) {
@@ -45,8 +45,15 @@ function resolve(string, operator = '+'){
         }else{
             expresionArray = string.split('-');
         }
-
         operatorToEvaluate = '-'
+    }
+    else if(string.includes('*')){
+        expresionArray = string.split('*');
+        operatorToEvaluate = '*'        
+    }
+    else if (string.includes('/')){
+        expresionArray = string.split('/');
+        operatorToEvaluate = '/';
     }
     let aux = operate(Number(expresionArray[0]), Number(expresionArray[1]), operatorToEvaluate);
     operation = aux.toString();
@@ -66,13 +73,11 @@ numberButtons.forEach( (button) =>{
 })
 
 
-// Si cuando se presiona un operador ya hay uno antes (quizas solo valga con +/-)
-//
 let sumOperator = document.querySelectorAll('.operator')
 sumOperator.forEach( (operator) =>{
     operator.addEventListener('click', () =>{
         console.log(operator.id);
-        (operation.includes('+') || operation.includes('-')) ? resolve(operation, operator.id): operation += operator.id; // solo suma hasta ahora
+        (operation.includes('+') || operation.includes('-') || operation.includes('*') || operation.includes('/')) ? resolve(operation, operator.id): operation += operator.id; 
         console.log(operation);
     })
 })
@@ -89,11 +94,4 @@ cleanButton.addEventListener('click', ()=>{
 })
 
 
-// agregar que resuelva multiplicacion y division
-// Equals solo muestre el resultado en pantalla, y que las operaciones se hagan automaticas
-//  para usar en el display
-// let display = document.querySelector('.result-container');
-// let displayOperation = document.createElement('div');
-// displayOperation.classList.add('content');
-// displayOperation.textContent = operation.concat(button.value)
-// display.appendChild(displayOperation)
+// Add float point, C option and block when tries to divide by 0
