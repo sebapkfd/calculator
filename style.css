@@ -1,6 +1,7 @@
 body{
     display: flex;
     justify-content: center;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .main-container{
@@ -32,7 +33,6 @@ body{
     grid-template-rows: repeat(4,50px);
     color: white;
     grid-gap: 5px;
-    font-family: 'Varela Round', sans-serif;
 }
 
 .button{

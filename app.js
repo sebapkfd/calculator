@@ -1,36 +1,32 @@
-function add(a, b){
-    return a + b;
-}
-
-function sustract(a, b){
-    return a - b;
-}
-
-function multiply(a,b){
-    return a*b;
-}
-
-function division(a, b){
-    return (b !=0 ) ? Number(Math.round((a/b)+'e'+2)+'e-'+2): 'error';
-}
-
 function operate(a = 0, b = 0, operator){
     switch (operator) {
         case '+':
-            return add(a,b);
+            return a + b;
         case '-':
-            return sustract(a,b);
+            return a - b;
         case '*':
-            return multiply(a,b);
+            return a*b;
         case '/':
-            return division(a,b);
+            return (b !=0 ) ? Number(Math.round((a/b)+'e'+2)+'e-'+2): 'error';
         default:
             break;
     }
 }
 
+function displayResult(){
+    let containerResult = document.querySelector('.result-container');
+    let contentResult = document.createElement('div');
+    contentResult.classList.add('content');
+    contentResult.textContent = operation;
+    if (containerResult.firstChild === null) {
+        containerResult.appendChild(contentResult);
+    }else{
+        containerResult.removeChild(containerResult.firstChild);
+        containerResult.appendChild(contentResult);
+    }
+}
+
 // Funcion Auxiliar, después su funcionamiento será enviado a otra funcion
-// funciona solo con +/-
 function resolve(string, operator = '+'){
     let operatorToEvaluate;
     if (string.includes('+')){
@@ -68,29 +64,29 @@ numberButtons.forEach( (button) =>{
     button.addEventListener('click', () => {
         console.log(button.value);
         operation += button.value;
-        console.log(operation);
+        displayResult();
     });
 })
-
 
 let sumOperator = document.querySelectorAll('.operator')
 sumOperator.forEach( (operator) =>{
     operator.addEventListener('click', () =>{
         console.log(operator.id);
         (operation.includes('+') || operation.includes('-') || operation.includes('*') || operation.includes('/')) ? resolve(operation, operator.id): operation += operator.id; 
-        console.log(operation);
+        displayResult();
     })
 })
 
 let equalsOperator = document.getElementById('equals');
 equalsOperator.addEventListener('click', ()=> {
     resolve(operation,'=')
-    console.log(operation)
+    displayResult();
 })
 
 let cleanButton = document.getElementById('ac');
 cleanButton.addEventListener('click', ()=>{
     operation = '';
+    displayResult();
 })
 
 
